@@ -41,10 +41,26 @@ function getACar(req, res, next) {
     });
 }
 
+function createACar(req, res, next) {
+  console.log("this is the request" + parseInt(req.body));
+  db.none('insert into cars (make, model, year, price_range, mileage, cylinders, city_mpg, highway_mpg, engine, vin, item_num)' + 'values (${make}, ${model}, ${year}, ${price_range}, ${mileage}, ${cylinders}, ${city_mpg}, ${highway_mpg}, ${engine}, ${vin}, ${item_num})',
+    req.body)
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Inserted one car, thanks!'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 module.exports = {
   getAllCars: getAllCars,
   getACar: getACar,
-  createACar: createACar,
-  updateACar: updateACar,
-  deleteACar: deleteACar
+  createACar: createACar
+  // updateACar: updateACar,
+  // deleteACar: deleteACar
 };
