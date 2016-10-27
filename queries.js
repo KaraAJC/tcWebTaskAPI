@@ -42,8 +42,10 @@ function getACar(req, res, next) {
 }
 
 function createACar(req, res, next) {
-  db.none('insert into cars (make, model, year, price_range, mileage, cylinders, city_mpg, highway_mpg, engine, vin, item_num)' + 'values (${make}, ${model}, ${year}, ${price_range}, ${mileage}, ${cylinders}, ${city_mpg}, ${highway_mpg}, ${engine}, ${vin}, ${item_num})',
-    req.body)
+  console.log("the requests are: " + JSON.stringify(req.params));
+  console.log("OR the requests are: " + JSON.stringify(req.body));
+
+  db.none("INSERT INTO cars(make, model, year, price_range, mileage, cylinders, city_mpg, highway_mpg, engine, vin, item_num) VALUES(${make}, ${model}, ${year}, ${price_range}, ${mileage}, ${cylinders}, ${city_mpg}, ${highway_mpg}, ${engine}, ${vin}, ${item_num})", req.body)
     .then(function () {
       res.status(200)
         .json({
