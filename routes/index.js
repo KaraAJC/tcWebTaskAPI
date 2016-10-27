@@ -13,15 +13,15 @@ router.get('/', function(req, res, next) {
   router.get('/api/cars', db.getAllCars)
 
 // POST CARS Create
-  router.post ('/api/cars', db.createACar)
+  router.post('/api/cars', db.createACar)
 
 // GET CARS Show(read one)
   router.get('/api/cars/:id', db.getACar)
 
 // PUT CARS Update
-  // router.put ('/api/cars/:id/update', db.updateACar)
+  // router.put('/api/cars/:id/update', db.updateACar)
 
 // DELETE CARS Destroy
-  // router.delete ('/api/cars/', db.deleteACar)
+  // router.delete('/api/cars/', db.deleteACar)
 
 module.exports = router;
