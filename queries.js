@@ -11,7 +11,7 @@ var db = pgp(connectionString);
 
 // Query Functions
 function getAllCars (req, res, next) {
-  db.any('select * from cars')
+  db.any('select * from cars') // TODO: build task that runs the following statement: SELECT * FROM cars INNER JOIN pagestats ON cars.id=pagestats.carID INNER JOIN photos ON cars.id=photos.carID
     .then(function (data) {
       res.status(200)
         .json({
@@ -27,6 +27,7 @@ function getAllCars (req, res, next) {
 
 function getACar(req, res, next) {
   var carID = parseInt(req.params.id);
+  console.log("the params are: " + JSON.stringify(req.params));
   db.one('select * from cars where id = $1', carID)
     .then(function (data) {
       res.status(200)
@@ -42,10 +43,9 @@ function getACar(req, res, next) {
 }
 
 function createACar(req, res, next) {
-  console.log("the requests are: " + JSON.stringify(req.params));
-  console.log("OR the requests are: " + JSON.stringify(req.body));
-
-  db.none("INSERT INTO cars(make, model, year, price_range, mileage, cylinders, city_mpg, highway_mpg, engine, vin, item_num) VALUES(${make}, ${model}, ${year}, ${price_range}, ${mileage}, ${cylinders}, ${city_mpg}, ${highway_mpg}, ${engine}, ${vin}, ${item_num})", req.body)
+  console.log("The requests are: " + JSON.stringify(req.body));
+  // db.none(pgp.as.format('INSERT INTO cars(${req.body.values}) VALUES(${val2}, ${val1})', req.body, { partial: true })); TODO
+  db.none("INSERT INTO cars VALUES()", req.body)
     .then(function () {
       res.status(200)
         .json({
